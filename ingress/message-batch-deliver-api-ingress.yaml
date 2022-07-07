@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /message-deliver/$1
+  creationTimestamp: "2022-05-26T04:09:58Z"
+  generation: 1
+  name: message-batch-deliver-api
+  namespace: gfactor
+  resourceVersion: "15864904"
+  uid: 2eb2a698-122f-4c7d-a859-65883749941c
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: sms.gfactor.com.tw
+    http:
+      paths:
+      - backend:
+          service:
+            name: message-batch-deliver
+            port:
+              number: 80
+        path: /batch-deliver/(.*)
+        pathType: Prefix
+status:
+  loadBalancer:
+    ingress:
+    - ip: 20.102.4.234

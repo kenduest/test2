@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"networking.k8s.io/v1","kind":"Ingress","metadata":{"annotations":{},"name":"message-api","namespace":"gfactor"},"spec":{"rules":[{"host":"sms.gfactor.com.tw","http":{"paths":[{"backend":{"service":{"name":"message-api","port":{"number":80}}},"path":"/message-api","pathType":"Prefix"}]}}]}}
+  creationTimestamp: "2022-04-28T09:50:46Z"
+  generation: 2
+  name: message-api
+  namespace: gfactor
+  resourceVersion: "5231702"
+  uid: efce80ae-de4d-4bdb-b7ab-46e1d59d4e5f
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: sms.gfactor.com.tw
+    http:
+      paths:
+      - backend:
+          service:
+            name: message-api
+            port:
+              number: 80
+        path: /message-api
+        pathType: Prefix
+status:
+  loadBalancer:
+    ingress:
+    - ip: 20.102.4.234

@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"networking.k8s.io/v1","kind":"Ingress","metadata":{"annotations":{"nginx.ingress.kubernetes.io/rewrite-target":"/message-deliver/$1"},"name":"message-p9-deliver-api","namespace":"gfactor"},"spec":{"ingressClassName":"nginx","rules":[{"host":"sms.gfactor.com.tw","http":{"paths":[{"backend":{"service":{"name":"message-p9-deliver","port":{"number":80}}},"path":"/p9-deliver/(.*)","pathType":"Prefix"}]}}]},"status":{"loadBalancer":{"ingress":[{"ip":"20.102.4.234"}]}}}
+    nginx.ingress.kubernetes.io/rewrite-target: /message-deliver/$1
+  creationTimestamp: "2022-05-26T03:25:43Z"
+  generation: 7
+  name: message-p9-deliver-api
+  namespace: gfactor
+  resourceVersion: "15863797"
+  uid: 723e663e-e750-4a3c-8fe9-d896fe9dbfe1
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: sms.gfactor.com.tw
+    http:
+      paths:
+      - backend:
+          service:
+            name: message-p9-deliver
+            port:
+              number: 80
+        path: /p9-deliver/(.*)
+        pathType: Prefix
+status:
+  loadBalancer:
+    ingress:
+    - ip: 20.102.4.234
