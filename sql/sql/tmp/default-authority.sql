@@ -1,0 +1,9 @@
+INSERT INTO mbroker.dbo.authority (uid, code, name, apply_to, seq) VALUES (N'6792bb30-f52f-11ec-86c6-22cfe8010d63', N'template', N'樣版管理', N'portal', 0);
+INSERT INTO mbroker.dbo.authority (uid, code, name, apply_to, seq) VALUES (N'6792bb31-f52f-11ec-86c6-22cfe8010d63', N'event', N'事件管理', N'portal', 1);
+INSERT INTO mbroker.dbo.authority (uid, code, name, apply_to, seq) VALUES (N'6792bb32-f52f-11ec-86c6-22cfe8010d63', N'permission', N'帳號權限管理', N'portal', 2);
+INSERT INTO mbroker.dbo.authority (uid, code, name, apply_to, seq) VALUES (N'6792bb33-f52f-11ec-86c6-22cfe8010d63', N'permission-confidential', N'敏資查閱權限管理', N'portal', 3);
+INSERT INTO mbroker.dbo.authority (uid, code, name, apply_to, seq) VALUES (N'6792bb34-f52f-11ec-86c6-22cfe8010d63', N'list', N'名單管理', N'portal', 4);
+INSERT INTO mbroker.dbo.authority (uid, code, name, apply_to, seq) VALUES (N'6792bb35-f52f-11ec-86c6-22cfe8010d63', N'send', N'排程管理', N'portal', 5);
+INSERT INTO mbroker.dbo.authority (uid, code, name, apply_to, seq) VALUES (N'6792bb36-f52f-11ec-86c6-22cfe8010d63', N'report', N'記錄管理', N'portal', 6);
+INSERT INTO mbroker.dbo.authority (uid, code, name, apply_to, seq) VALUES (N'6792bb37-f52f-11ec-86c6-22cfe8010d63', N'audit', N'稽核管理', N'portal', 7);
+INSERT INTO mbroker.dbo.authority (uid, code, name, apply_to, seq) VALUES (N'6792bb38-f52f-11ec-86c6-22cfe8010d63', N'sys', N'系統管理', N'portal', 8);
