@@ -1,0 +1,4 @@
+#!/bin/bash
+
+tool/delete-db-data $@
+

@@ -1,0 +1,21 @@
+#!/bin/bash
+
+case "$1" in 
+
+	source1)
+		tool/get-source1-db-data $@
+		;;
+
+	source2)
+		tool/get-source2-db-data $@
+		;;
+
+	target1)
+		tool/get-target1-db-data $@
+		;;
+
+	*)
+
+		echo -e "\n$(basename $0) [source1 | source2 | target1] \n"
+		;;
+esac

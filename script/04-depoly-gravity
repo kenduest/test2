@@ -1,0 +1,19 @@
+#!/bin/bash
+
+case "$1" in
+	gravity)
+			kubectl create -f gravity/00-gravity.yaml
+			;;
+	transmitter)
+			kubectl create -f gravity/02-transmitter-mssql.yaml
+			;;
+
+	adapter)
+			kubectl create -f gravity/01-adapter.yaml
+			;;
+
+	*)
+			echo -e "\nUsage: $(basename $0) [gravity | adapter | transmitter]\n"
+			;;
+esac
+

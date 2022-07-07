@@ -1,0 +1,60 @@
+#!/bin/bash
+
+cd sql
+
+CMD="sqlcmd"
+
+# -----------------------------------------------------------------------------------
+
+echo "#1 Create DeliveryPool table for source1 db #1"
+$CMD -S 23.96.113.60,1433 -U sa -P Br0bridge@mssql -i source1.sql
+
+echo "#2 Create DeliveryPool table for source1 db #2"
+$CMD -S 23.96.117.111,1433 -U sa -P Br0bridge@mssql -i source1.sql
+
+# -----------------------------------------------------------------------------------
+
+echo "#3 Create table for source2 db #1"
+$CMD -S 23.96.127.2,1433 -U sa -P Br0bridge@mssql -i source2.sql
+
+echo "#4 Create table for source2 db #2"
+$CMD -S 23.96.117.206,1433 -U sa -P Br0bridge@mssql -i source2.sql
+
+# -----------------------------------------------------------------------------------
+
+echo "#5 create table for kernel db #1"
+$CMD -S 20.119.62.62,1433 -U sa -P Br0bridge@mssql -i kernel.sql
+
+echo "#5 Create table for report db"
+$CMD -S 23.96.22.252,1433 -U sa -P Br0bridge@mssql -i report.sql
+
+echo "#5 Create table for report db"
+$CMD -S 23.96.22.252,1433 -U sa -P Br0bridge@mssql -i report.sql
+
+# -----------------------------------------------------------------------------------
+
+echo "#6 Running cdc setting for source1 db #1"
+$CMD -S 23.96.113.60,1433 -U sa -P Br0bridge@mssql -i source1-cdc.sql
+
+echo "#7 Running cdc setting for source1 db #2"
+$CMD -S 23.96.117.111,1433 -U sa -P Br0bridge@mssql -i source1-cdc.sql
+
+echo "#8 Running cdc setting for source2 db #1"
+$CMD -S 23.96.127.2,1433 -U sa -P Br0bridge@mssql -i source2-cdc.sql
+
+echo "#9 Running cdc setting for source2 db #2"
+$CMD -S 23.96.117.206,1433 -U sa -P Br0bridge@mssql -i source2-cdc.sql
+
+echo "#10 Running dc setting for kernel db"
+$CMD -S 20.119.62.62,1433 -U sa -P Br0bridge@mssql -i kernel-cdc.sql
+
+echo "#11 Running dc setting for report db"
+$CMD -S 23.96.22.252,1433 -U sa -P Br0bridge@mssql -i report-cdc.sql
+
+echo "Done"
+
+# -----------------------------------------------------------------------------------
+
+#echo "#3 Create any Kernel table for target db"
+#$CMD -S localhost,3433 -U sa -P Br0bridge@mssql -i target1.sql
+

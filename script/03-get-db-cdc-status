@@ -1,0 +1,15 @@
+#!/bin/bash
+
+cd sql
+
+CMD="sqlcmd"
+
+echo -e "\n==================================== Source Database #1 ======================================\n"
+
+$CMD -S localhost,1433 -U sa -P Br0bridge@mssql -i status.sql
+$CMD -S localhost,2433 -U sa -P Br0bridge@mssql -i status.sql
+
+echo -e "\n===================================== Source Database #2 =====================================\n"
+$CMD -S localhost,3433 -U sa -P Br0bridge@mssql -i status2.sql
+$CMD -S localhost,4433 -U sa -P Br0bridge@mssql -i status2.sql
+

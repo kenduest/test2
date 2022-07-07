@@ -1,0 +1,16 @@
+#!/bin/bash
+
+kubectl create ns gravity-demo
+
+kubectl create -f database/source-mssql/source-mssql1.1
+kubectl create -f database/source-mssql/source-mssql1.2
+
+kubectl create -f database/source-mssql/source-mssql2.1
+kubectl create -f database/source-mssql/source-mssql2.2
+
+kubectl create -f database/report-mssql
+kubectl create -f database/cache-mssql/cache-mssql1
+kubectl create -f database/cache-mssql/cache-mssql2
+
+kubectl create -f database/target-mssql1
+

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+ps aux | grep kubectl | grep "port-forward" | grep "mssql" | grep -- "-n mssql" | awk '{print $2}' | xargs kill
+
+data=$(kubectl get pods -n mssql)
+
+name=$(echo "$data" | grep mssql-cdc47fc9b-dfd8f |awk '{print $1}')
+kubectl -n mssql port-forward pod/${name} 5433:1433 > /dev/null &
+

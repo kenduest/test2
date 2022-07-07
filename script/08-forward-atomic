@@ -1,0 +1,9 @@
+#!/bin/bash
+
+ps aux | grep kubectl | grep 1880 | grep "port-forward" | awk '{print $2}' | xargs kill -9
+
+data=$(kubectl get pods -n gravity-demo)
+
+name=$(echo "$data" | grep gravity-db-api-atomic |awk '{print $1}')
+kubectl -n gravity-demo port-forward pod/${name} 1880:1880 > /dev/null &
+

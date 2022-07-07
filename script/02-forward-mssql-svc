@@ -1,0 +1,26 @@
+#!/bin/bash
+
+pkill kubectl
+data=$(kubectl get pods -n gravity-demo)
+
+# source database #1
+name=$(echo "$data" | grep source-mssql1-1 | awk '{print $1}')
+kubectl -n gravity-demo port-forward pod/${name} 1433:1433 > /dev/null &
+
+name=$(echo "$data" | grep source-mssql1-2 | awk '{print $1}')
+kubectl -n gravity-demo port-forward pod/${name} 2433:1433 > /dev/null &
+
+# source database #2
+name=$(echo "$data" | grep source-mssql2-1 | awk '{print $1}')
+kubectl -n gravity-demo port-forward pod/${name} 3433:1433 > /dev/null &
+
+name=$(echo "$data" | grep source-mssql2-2 | awk '{print $1}')
+kubectl -n gravity-demo port-forward pod/${name} 4433:1433 > /dev/null &
+
+
+#name=$(echo "$data" | grep target-mssql1 |awk '{print $1}')
+#kubectl -n gravity-demo port-forward pod/${name} 3433:1433 > /dev/null &
+
+#name=$(kubectl get pods -n mssql | grep mssql- |awk '{print $1}')
+#kubectl -n mssql port-forward pod/${name} 4433:1433 > /dev/null &
+
