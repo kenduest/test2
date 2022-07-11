@@ -1,18 +1,8 @@
-CREATE DATABASE Brobridge;
+CREATE DATABASE mbroker; 
 GO
 
-USE Brobridge;
+USE mbroker;
 GO
-
-drop table send;
-GO
-
-drop table send_record;
-go
-
-drop table send_record_reply;
-go
-
 
 create table send
 (
@@ -113,4 +103,20 @@ create table send_record_reply
 
 go
 
+CREATE DATABASE SinoPacBank;
+GO
+
+USE SinoPacBank;
+GO
+
+
+CREATE TABLE DeliveryResultLog (
+	UID			BIGINT IDENTITY(1,1) PRIMARY KEY,
+	DeliveryPoolUID		BIGINT NOT NULL,
+	DeliverySendUID		UNIQUEIDENTIFIER,
+	CreateTime		DATETIME DEFAULT SYSDATETIME(),
+	Status			TINYINT
+);
+
+GO
 

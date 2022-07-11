@@ -1,7 +1,7 @@
-CREATE DATABASE Brobridge;
+CREATE DATABASE mbroker;
 GO
 
-USE Brobridge;
+USE mbroker;
 GO
 
 create table send

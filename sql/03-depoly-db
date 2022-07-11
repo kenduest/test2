@@ -1,0 +1,76 @@
+#!/bin/bash
+
+cd sql
+
+CMD="sqlcmd"
+
+RESULT=$(kubectl get svc -n gravity-demo)
+
+SOURCE1_DB1=$(echo "$RESULT" | grep "source-mssql1-1" | awk '{ print $4}')
+SOURCE1_DB2=$(echo "$RESULT" | grep "source-mssql1-2" | awk '{ print $4}')
+
+SOURCE2_DB1=$(echo "$RESULT" | grep "source-mssql2-1" | awk '{ print $4}')
+SOURCE2_DB2=$(echo "$RESULT" | grep "source-mssql2-2" | awk '{ print $4}')
+
+KERNEL_DB=$(echo "$RESULT" | grep "kernel-mssql" | awk '{ print $4}')
+REPORT_DB=$(echo "$RESULT" | grep "report-mssql" | awk '{ print $4}')
+
+CACHE1_DB=$(echo "$RESULT" | grep "cache-mssql1" | awk '{ print $4}')
+CACHE2_DB=$(echo "$RESULT" | grep "cache-mssql2" | awk '{ print $4}')
+
+DB_PASSWORD='Br0bridge@mssql'
+
+
+# -----------------------------------------------------------------------------------
+
+echo "# Create DeliveryPool table for source1 db #1"
+$CMD -S ${SOURCE1_DB1},1433 -U sa -P ${DB_PASSWORD} -i source1.sql
+
+echo "# Create DeliveryPool table for source1 db #2"
+$CMD -S ${SOURCE1_DB2},1433 -U sa -P ${DB_PASSWORD} -i source1.sql
+
+# -----------------------------------------------------------------------------------
+
+echo "# Create table for source2 db #1"
+$CMD -S ${SOURCE2_DB1},1433 -U sa -P ${DB_PASSWORD} -i source2.sql
+
+echo "# Create table for source2 db #2"
+$CMD -S ${SOURCE2_DB2},1433 -U sa -P ${DB_PASSWORD} -i source2.sql
+
+# -----------------------------------------------------------------------------------
+
+echo "# create table for kernel db #1"
+$CMD -S ${KERNEL_DB},1433 -U sa -P ${DB_PASSWORD} -i kernel.sql
+
+echo "# Create table for report db"
+$CMD -S ${REPORT_DB},1433 -U sa -P ${DB_PASSWORD} -i report.sql
+
+# -----------------------------------------------------------------------------------
+
+echo "# Running cdc setting for source1 db #1"
+$CMD -S ${SOURCE1_DB1},1433 -U sa -P ${DB_PASSWORD} -i source1-cdc.sql
+
+echo "# Running cdc setting for source1 db #2"
+$CMD -S ${SOURCE1_DB2},1433 -U sa -P ${DB_PASSWORD} -i source1-cdc.sql
+
+echo "# Running cdc setting for source2 db #1"
+$CMD -S ${SOURCE2_DB1},1433 -U sa -P ${DB_PASSWORD} -i source2-cdc.sql
+
+echo "# Running cdc setting for source2 db #2"
+$CMD -S ${SOURCE2_DB2},1433 -U sa -P ${DB_PASSWORD} -i source2-cdc.sql
+
+# -----------------------------------------------------------------------------------
+
+echo "# Running dc setting for kernel db"
+$CMD -S ${KERNEL_DB},1433 -U sa -P ${DB_PASSWORD} -i kernel-cdc.sql
+
+echo "# Running dc setting for report db"
+$CMD -S ${REPORT_DB},1433 -U sa -P ${DB_PASSWORD} -i report-cdc.sql
+
+echo "Done"
+
+# -----------------------------------------------------------------------------------
+
+#echo "# Create any Kernel table for target db"
+#$CMD -S localhost,3433 -U sa -P ${DB_PASSWORD} -i target1.sql
+

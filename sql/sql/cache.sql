@@ -1,7 +1,7 @@
-CREATE DATABASE Brobridge;
+CREATE DATABASE SinoPacBank;
 GO
 
-USE Brobridge;
+USE SinoPacBank;
 GO
 
 

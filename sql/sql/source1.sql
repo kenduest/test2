@@ -1,14 +1,14 @@
-CREATE DATABASE Brobridge;
+CREATE DATABASE SinoPacBank;
 GO
 
-USE Brobridge;
+USE SinoPacBank;
 GO
 
 
 -- 即時或是一般簡訊 
 
 CREATE TABLE DeliveryPool (
-	UID		uniqueidentifier NOT NULL DEFAULT NEWSEQUENTIALID() PRIMARY KEY,
+	UID		BIGINT IDENTITY(1,1) PRIMARY KEY,
         SerialNum       INT,
         MPhoneNum       VARCHAR(10) NOT NULL,
         MsgData         VARCHAR(4000) NOT NULL,
@@ -31,9 +31,8 @@ GO
 
 -- 放置一般簡訊送到 API 失敗時候能夠定期重送的資訊記錄
 
-CREATE TABLE DeliveryUHandleDeliveryPool (
-	UID		BIGINT IDENTITY(1,1) PRIMARY KEY,
-	DeliveryPoolUID	UNIQUEIDENTIFIER NOT NULL,	
+CREATE TABLE DeliveryUnhandleDeliveryPool (
+	DeliveryPoolUID	BIGINT NOT NULL,	
 	CreateTime	DATETIME DEFAULT SYSDATETIME(),
 	FOREIGN KEY(DeliveryPoolUID) REFERENCES DeliveryPool(UID)
 );
@@ -44,11 +43,11 @@ GO
 -- 放置一般簡訊送到 API 溝通歷史資訊記錄
 
 CREATE TABLE DeliveryResultLog (
-	UID		BIGINT IDENTITY(1,1) PRIMARY KEY,
-	DeliveryPoolUID	UNIQUEIDENTIFIER NOT NULL,
-	CreateTime	DATETIME DEFAULT SYSDATETIME(),
-	Status		TINYINT,
-	FOREIGN KEY(DeliveryPoolUID) REFERENCES DeliveryPool(UID)
+	UID			BIGINT IDENTITY(1,1) PRIMARY KEY,
+	DeliveryPoolUID		BIGINT NOT NULL,
+	DeliverySendUID		UNIQUEIDENTIFIER,
+	CreateTime		DATETIME DEFAULT SYSDATETIME(),
+	Status			TINYINT,
 );
 
 GO
