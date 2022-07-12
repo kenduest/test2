@@ -1,0 +1,57 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: gravity2-transmitter-secret
+  namespace: gravity-demo
+data:
+  mssqlPassword: QnIwYnJpZGdlQG1zc3Fs
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: gravity2-transmitter-pvc
+  namespace: gravity-demo
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+
+apiVersion: gravity.brobridge.com/v3 
+kind: "Transmitter"
+metadata:
+  name: "gravity2-transmitter"
+  namespace: gravity-demo
+spec:
+    type: mssql 
+    initImage: busybox:1.28
+    image: brobridgehub/gravity-transmitter-mssql:v1.2.0
+    #imagePullPolicy: IfNotPresent
+    config:
+      #gravityDomain: gravity
+      gravityHost: gravity2-nats:4222
+      volume:
+        name: gravity2-transmitter-store
+        persistentVolumeClaim:
+          claimName: gravity2-transmitter-pvc
+      subscriptionSettings: |
+        {
+          "subscriptions": {
+            "BatchDeliveryPool": [
+              "BatchDeliveryPool"
+            ]
+          }
+        }
+      mssqlConfig:
+        host: target-mssql1
+        port: 1433 
+        secure: false
+        dbName: Brobridge
+        username: sa 
+        password: Br0bridge@mssql
+

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+CMD="sqlcmd"
+
+$CMD -S localhost,1433 -U sa -P Br0bridge@mssql -i status.sql
+
+echo "Done"
+

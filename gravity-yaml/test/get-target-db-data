@@ -1,0 +1,23 @@
+#!/usr/bin/env python3
+
+import pymssql
+
+hostname = '127.0.0.1:2433'
+username = 'SA'
+password = 'Br0bridge@mssql'
+database = 'TestDB2'
+
+conn = pymssql.connect(host=hostname, user=username, password=password, database=database)
+cursor = conn.cursor(as_dict=True)
+cursor.execute("SELECT * FROM dbo.users;")
+row = cursor.fetchone()  
+
+index = 0
+while row:
+    print("#%s\n%s\n" % (index+1,row))
+    row =  cursor.fetchone()
+    index+=1
+
+cursor.close()
+conn.close()
+

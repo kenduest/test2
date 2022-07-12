@@ -1,0 +1,76 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: gravity-kernel-demo-adapter-pvc 
+  namespace: gravity-demo
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 200Mi
+  #storageClassName: spare
+
+---
+
+apiVersion: "gravity.brobridge.com/v4"
+kind: "Adapter"
+metadata:
+  name: "gravity-kernel-adapter-source"
+  namespace: gravity-demo
+spec:
+  type: mssql
+  imagePullPolicy: IfNotPresent
+  image: smssit.azurecr.io/gravity/gravity-adapter-mssql:v2.2.2
+  #image: brobridgehub/gravity-adapter-mssql:v2.2.2
+  config:
+    gravityHost: gravity-kernel-nats
+    gravityPort: 4222
+    storeEnabled: true
+    sourceSettings: |
+       {
+            "sources": {
+                    "mssql_kernel": {
+                            "disabled": false,
+                            "host": "kernel-mssql",
+                            "port": 1433,
+                            "username": "SA",
+                            "password": "Br0bridge@mssql",
+                            "dbname": "mbroker",
+                            "param": "",
+                            "initialLoad": true,
+                            "interval": 2,
+                            "tables": {
+                                      "dbo.send":{
+                                              "events": {
+                                                      "snapshot": "SendProductInitialize",
+                                                      "create": "SendProductCreate",
+                                                      "update": "SendProductUpdate",
+                                                      "delete": "SendProductDelete"
+                                              }
+                                      },
+                                      "dbo.send_record":{
+                                              "events": {
+                                                      "snapshot": "SendRecordProductInitialize",
+                                                      "create": "SendRecordProductCreate",
+                                                      "update": "SendRecordProductUpdate",
+                                                      "delete": "SendRecordProductDelete"
+                                              }
+                                      },
+                                      "dbo.send_record_reply":{
+                                              "events": {
+                                                      "snapshot":"SendRecordReplyProductInitialize",
+                                                      "create": "SendRecordReplyProductCreate",
+                                                      "update": "SendRecordReplyProductUpdate",
+                                                      "delete": "SendRecordReplyProductDelete"
+                                              }
+                                      },
+                            }
+                    }
+            }
+       }
+
+    volume:
+      name: gravity-kernel-demo-adapter-store
+      persistentVolumeClaim:
+        claimName: gravity-kernel-demo-adapter-pvc

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+CMD="sqlcmd"
+
+echo "Create delivery table for source db + cdc setting"
+$CMD -S localhost,1433 -U sa -P Br0bridge@mssql -i db.sql 
+
+echo "Create delivery table for target db1"
+$CMD -S localhost,2433 -U sa -P Br0bridge@mssql -i db2.sql
+
+echo "Done"
+

@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: gravity-kernel-stan-pvc 
+  namespace: gravity-demo
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  #storageClassName: standard
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gravity-kernel-stan
+  namespace: gravity-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nats-streaming
+      stan_cluster: gravity-kernel-stan
+  template:
+    metadata:
+      labels:
+        app: nats-streaming
+        stan_cluster: gravity-kernel-stan
+    spec:
+      containers:
+      - args:
+        - -store
+        - file
+        - -dir
+        - /datastore
+        - -ns
+        - nats://gravity-kernel-nats:4222
+        - -cid
+        - external-stan
+        image: nats-streaming:0.22
+        imagePullPolicy: IfNotPresent
+        name: stan
+        volumeMounts:
+        - mountPath: /datastore
+          name: gravity-kernel-stan-pvc
+      volumes:
+      - name: gravity-kernel-stan-pvc
+        persistentVolumeClaim:
+          claimName: gravity-kernel-stan-pvc

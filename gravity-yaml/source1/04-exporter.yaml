@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: gravity1-exporter-pvc 
+  namespace: gravity-demo
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+  #storageClassName: standard
+  #storageClassName: spare
+
+---
+
+apiVersion: "gravity.brobridge.com/v3"
+kind: "Exporter"
+metadata:
+  name: "gravity1-exporter"
+  namespace: gravity-demo
+spec:
+  type: stan
+  #image: brobridgehub/gravity-exporter-stan:v2.2.0
+  #initImage: busybox:1.28  
+  imagePullPolicy: Always
+  config:
+    gravityHost: gravity1-nats:4222
+    subscriptionSettings: |
+      {
+        "subscriptions": {
+          "DeliveryPool": [
+            "rowData.source.DeliveryPool"
+          ]
+        }
+      }
+
+    stanConfig:
+      host: gravity1-nats:4222
+      clusterID: external-stan
+    volume:
+      name: gravity1-exporter-store
+      persistentVolumeClaim:
+        claimName: gravity1-exporter-pvc
+

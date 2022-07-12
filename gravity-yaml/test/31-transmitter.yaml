@@ -1,0 +1,57 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: gravity-transmitter-secret
+  namespace: gravity-demo
+data:
+  mssqlPassword: QnIwYnJpZGdlQG1zc3Fs
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: demo1-transmitter-pvc
+  namespace: gravity-demo
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+
+apiVersion: gravity.brobridge.com/v3 
+kind: "Transmitter"
+metadata:
+  name: "demo1-gravity-transmitter"
+  namespace: gravity-demo
+spec:
+    type: postgres
+    image: brobridgehub/gravity-transmitter-postgres:v3.2.0 
+    imagePullPolicy: IfNotPresent
+    config:
+      #gravityDomain: gravity
+      gravityHost: demo1-gravity-nats:4222
+      volume:
+        name: demo1-gravity-transmitter-store
+        persistentVolumeClaim:
+          claimName: demo1-transmitter-pvc
+      subscriptionSettings: |
+        {
+          "subscriptions": {
+            "accountData": [
+              "users"
+            ]
+          }
+        }
+
+      postgresConfig:
+        host: demo1-postgres
+        port: 5432
+        secure: false
+        dbName:  postgres
+        username: postgres
+        password: 1qazWWSX
+

@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: gravity-kernel-exporter-pvc 
+  namespace: gravity-demo
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+  #storageClassName: standard
+  #storageClassName: spare
+
+---
+
+apiVersion: "gravity.brobridge.com/v3"
+kind: "Exporter"
+metadata:
+  name: "gravity-kernel-exporter"
+  namespace: gravity-demo
+spec:
+  type: stan
+  #image: brobridgehub/gravity-exporter-stan:v2.2.0
+  #initImage: busybox:1.28  
+  imagePullPolicy: Always
+  config:
+    gravityHost: gravity-kernel-nats:4222
+    subscriptionSettings: |
+      {
+        "subscriptions": {
+          "SendProduct": [
+            "rowData.source.SendProduct"
+          ],
+
+          "SendRecordProduct": [
+            "rowData.source.SendRecordProduct"
+          ],
+
+          "SendRecordReplyProduct": [
+            "rowData.source.SendRecordReplyProduct"
+          ],
+
+        }
+      }
+
+    stanConfig:
+      host: gravity-kernel-nats:4222
+      clusterID: external-stan
+    volume:
+      name: gravity-kernel-exporter-store
+      persistentVolumeClaim:
+        claimName: gravity-kernel-exporter-pvc
+
