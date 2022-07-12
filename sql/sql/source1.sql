@@ -1,14 +1,15 @@
-CREATE DATABASE SinoPacBank;
+
+CREATE DATABASE gravity;
 GO
 
-USE SinoPacBank;
+USE gravity;
 GO
 
 
 -- 即時或是一般簡訊 
 
 CREATE TABLE DeliveryPool (
-	UID		BIGINT IDENTITY(1,1) PRIMARY KEY,
+	UID		UNIQUEIDENTIFIER DEFAULT NEWSEQUENTIALID() PRIMARY KEY,
         SerialNum       INT,
         MPhoneNum       VARCHAR(10) NOT NULL,
         MsgData         VARCHAR(4000) NOT NULL,
@@ -25,29 +26,6 @@ CREATE TABLE DeliveryPool (
         Reference       VARCHAR(64),
 	GroupID		VARCHAR(36),
 	ObjectID	VARCHAR(36)
-);
-
-GO
-
--- 放置一般簡訊送到 API 失敗時候能夠定期重送的資訊記錄
-
-CREATE TABLE DeliveryUnhandleDeliveryPool (
-	DeliveryPoolUID	BIGINT NOT NULL,	
-	CreateTime	DATETIME DEFAULT SYSDATETIME(),
-	FOREIGN KEY(DeliveryPoolUID) REFERENCES DeliveryPool(UID)
-);
-
-GO
-
--- Delivery Log
--- 放置一般簡訊送到 API 溝通歷史資訊記錄
-
-CREATE TABLE DeliveryResultLog (
-	UID			BIGINT IDENTITY(1,1) PRIMARY KEY,
-	DeliveryPoolUID		BIGINT NOT NULL,
-	DeliverySendUID		UNIQUEIDENTIFIER,
-	CreateTime		DATETIME DEFAULT SYSDATETIME(),
-	Status			TINYINT,
 );
 
 GO
