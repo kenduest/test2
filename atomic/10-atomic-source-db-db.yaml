@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: gravity2-atomic-pvc
+  namespace: gravity-demo
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Mi
+  #storageClassName: wcppolicy
+  #storageClassName: spare 
+
+---
+
+apiVersion: "atomic.brobridge.com/v1"
+kind: "Atomic"
+metadata:
+  name: "gravity1-db-db"
+  namespace: gravity-demo
+spec:
+  #replicas: 1
+  #gitImage: alpine/git:v2.32.0
+  #atomicImage: brobridgehub/atomic:v0.0.5
+  #imagePullPolicy: IfNotPresent
+  ports: 1880
+  config:
+    gitHttpUrl: https://kenduest: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@github.com/kenduest/test-flow2
+    gitBranch: main
+    enableEditor: true
+    volume:
+      name: atomic-store
+      persistentVolumeClaim:
+        claimName: gravity2-atomic-pvc
+    service:
+      serviceType: LoadBalancer 
