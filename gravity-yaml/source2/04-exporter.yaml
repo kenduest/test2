@@ -29,8 +29,8 @@ spec:
     subscriptionSettings: |
       {
         "subscriptions": {
-          "BatchDeliveryPool": [
-            "rowData.source.BatchDeliveryPool"
+          "DeliveryPool": [
+            "rowData.source.DeliveryPool"
           ]
         }
       }

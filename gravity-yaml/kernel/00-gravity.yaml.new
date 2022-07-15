@@ -86,7 +86,7 @@ spec:
           "SendRecordProduct": {
                "schema": {
                   "uid":                 { "type": "string" },
-                  "send_uid":            { "type": "string" },
+                  "send_record_uid":     { "type": "string" },
                   "way_name":            { "type": "string" },
                   "serial_number":       { "type": "int" },
                   "send_time":           { "type": "time" },
@@ -228,7 +228,11 @@ spec:
                  "update_expired_time": { "type": "time" }
                },
               "handler": {
-                "script": "return source"
+                "script": "
+                  return {
+                    uid: source.uid,
+                    way_name: source.way_name
+                  }"
               }
             },
 
@@ -318,7 +322,7 @@ spec:
               "primaryKey": "uid",
               "schema": {
                   "uid":                 { "type": "string" },
-                  "send_uid":            { "type": "string" },
+                  "send_record_uid":     { "type": "string" },
                   "way_name":            { "type": "string" },
                   "serial_number":       { "type": "int" },
                   "send_time":           { "type": "time" },
@@ -370,7 +374,7 @@ spec:
               "primaryKey": "uid",
               "schema": {
                   "uid":                 { "type": "string" },
-                  "send_uid":            { "type": "string" },
+                  "send_record_uid":     { "type": "string" },    
                   "way_name":            { "type": "string" },
                   "serial_number":       { "type": "int" },
                   "send_time":           { "type": "time" },
@@ -421,7 +425,7 @@ spec:
               "primaryKey": "uid",
               "schema": {
                   "uid":                 { "type": "string" },
-                  "send_uid":            { "type": "string" },    
+                  "send_record_uid":     { "type": "string" },    
                   "way_name":            { "type": "string" },
                   "serial_number":       { "type": "int" },
                   "send_time":           { "type": "time" },
@@ -472,7 +476,7 @@ spec:
               "primaryKey": "uid",
               "schema": {
                   "uid":                 { "type": "string" },
-                  "send_uid":            { "type": "string" },    
+                  "send_record_uid":     { "type": "string" },    
                   "way_name":            { "type": "string" },
                   "serial_number":       { "type": "int" },
                   "send_time":           { "type": "time" },

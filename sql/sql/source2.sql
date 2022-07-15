@@ -1,16 +1,13 @@
-DROP DATABASE gravity;
+CREATE DATABASE smsdb;
 GO
 
-CREATE DATABASE gravity;
-GO
-
-USE gravity;
+USE smsdb 
 GO
 
 -- BATCH Delivery
 -- For Batch
 
-CREATE TABLE BatchDeliveryPool (
+CREATE TABLE DeliveryPool (
 	UID		UNIQUEIDENTIFIER DEFAULT NEWSEQUENTIALID() PRIMARY KEY,
         SerialNum       INT,
         MPhoneNum       VARCHAR(10) NOT NULL,
@@ -28,7 +25,7 @@ CREATE TABLE BatchDeliveryPool (
         Reference       VARCHAR(64),
 	GroupID		VARCHAR(36),
 	ObjectID	VARCHAR(36),
-	BatchID		VARCHAR(36)
+	BatchID		VARCHAR(64)
 );
 
 GO

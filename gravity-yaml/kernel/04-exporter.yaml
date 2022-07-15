@@ -39,7 +39,7 @@ spec:
 
           "SendRecordReplyProduct": [
             "rowData.source.SendRecordReplyProduct"
-          ],
+          ]
 
         }
       }

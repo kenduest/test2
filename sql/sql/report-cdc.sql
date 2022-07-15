@@ -26,7 +26,7 @@ GO
 
 
 
-USE SinoPacBank;
+USE smsdb;
 GO
 
 EXEC sys.sp_cdc_enable_table

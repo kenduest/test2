@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: gravity1-stan-pvc 
+  name: gravity-report-stan-pvc 
   namespace: gravity-demo
 spec:
   accessModes:
@@ -16,19 +16,19 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gravity1-stan
+  name: gravity-report-stan
   namespace: gravity-demo
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nats-streaming
-      stan_cluster: gravity1-stan
+      app: report-nats-streaming
+      stan_cluster: gravity-report-stan
   template:
     metadata:
       labels:
-        app: nats-streaming
-        stan_cluster: gravity1-stan
+        app: report-nats-streaming
+        stan_cluster: gravity-report-stan
     spec:
       containers:
       - args:
@@ -37,7 +37,7 @@ spec:
         - -dir
         - /datastore
         - -ns
-        - nats://gravity1-nats:4222
+        - nats://gravity-report-nats:4222
         - -cid
         - external-stan
         image: nats-streaming:0.22
@@ -45,8 +45,8 @@ spec:
         name: stan
         volumeMounts:
         - mountPath: /datastore
-          name: gravity1-stan-pvc
+          name: gravity-report-stan-pvc
       volumes:
-      - name: gravity1-stan-pvc
+      - name: gravity-report-stan-pvc
         persistentVolumeClaim:
-          claimName: gravity1-stan-pvc
+          claimName: gravity-report-stan-pvc

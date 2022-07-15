@@ -103,19 +103,29 @@ create table send_record_reply
 
 go
 
+CREATE DATABASE smsdb; 
+GO
+
+USE smsdb;
+GO
+
+
 CREATE DATABASE gravity;
 GO
 
 USE gravity;
 GO
 
+DROP TABLE DeliveryResultLog;
+GO
 
 CREATE TABLE DeliveryResultLog (
 	UID			UNIQUEIDENTIFIER DEFAULT NEWSEQUENTIALID() PRIMARY KEY,
 	DeliveryPoolUID		UNIQUEIDENTIFIER NOT NULL,
 	DeliverySendUID		UNIQUEIDENTIFIER,
 	CreateTime		DATETIME DEFAULT SYSDATETIME(),
-	Status			TINYINT
+	Status			TINYINT	DEFAULT 0,
+	Message			VARCHAR(4000)
 );
 
 GO

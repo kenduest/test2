@@ -51,7 +51,7 @@ spec:
       collectionSettings: |
         {
           "collections": {
-            "BatchDeliveryPool": {
+            "DeliveryPool": {
               "schema": {
                  "UID": { "type": "string" }, 
                  "SerialNum": { "type": "uint" },
@@ -81,8 +81,8 @@ spec:
         {
           "rules": [
             {
-              "event": "BatchDeliveryPoolInitialize",
-              "collection": "BatchDeliveryPool",
+              "event": "DeliveryPoolInitialize",
+              "collection": "DeliveryPool",
               "method": "insert",
               "primaryKey": "UID",
               "schema": {
@@ -107,33 +107,13 @@ spec:
                  "BatchID": { "type": "string" }
                },
               "handler": {
-                "script": "
-                  return {
-                    UID: source.UID,
-                    SerialNum: source.SerialNum,
-                    MPhoneNum: source.MPhoneNum,
-                    MsgData: source.MsgData,
-                    Priority: source.Priority,
-                    BookingTime: source.BookingTime,
-                    ExpireTime: source.ExpireTime,
-                    DepID: source.DepID,
-                    MsgType: source.MsgType,
-                    Memo: source.Memo,
-                    SenderID: source.SenderID,
-                    Bu: source.Bu,
-                    Company: source.Company,
-                    Channel: source.Channel,
-                    Reference: source.Reference,
-                    GroupID: source.GroupID,
-                    ObjectID: source.ObjectID,
-                    BatchID: source.BatchID
-                  }"
+                "script": "return source"
               }
             },
 
             {
-              "event": "BatchDeliveryPoolCreate",
-              "collection": "BatchDeliveryPool",
+              "event": "DeliveryPoolCreate",
+              "collection": "DeliveryPool",
               "method": "insert",
               "primaryKey": "UID",
               "schema": {
@@ -157,33 +137,13 @@ spec:
                  "BatchID": { "type": "string" }
                },
               "handler": {
-                "script": "
-                  return {
-                    UID: source.UID,
-                    SerialNum: source.SerialNum,
-                    MPhoneNum: source.MPhoneNum,
-                    MsgData: source.MsgData,
-                    Priority: source.Priority,
-                    BookingTime: source.BookingTime,
-                    ExpireTime: source.ExpireTime,
-                    DepID: source.DepID,
-                    MsgType: source.MsgType,
-                    Memo: source.Memo,
-                    SenderID: source.SenderID,
-                    Bu: source.Bu,
-                    Company: source.Company,
-                    Channel: source.Channel,
-                    Reference: source.Reference,
-                    GroupID: source.GroupID,
-                    ObjectID: source.ObjectID,
-                    BatchID: source.BatchID
-                  }"
+                "script": "return source"
               }
             },
 
             {
-              "event": "BatchDeliveryPoolUpdate",
-              "collection": "BatchDeliveryPool",
+              "event": "DeliveryPoolUpdate",
+              "collection": "DeliveryPool",
               "method": "update",
               "primaryKey": "UID",
               "schema": {
@@ -208,32 +168,12 @@ spec:
                },
 
               "handler": {
-                "script": "
-                  return {
-                    UID: source.UID,
-                    SerialNum: source.SerialNum,
-                    MPhoneNum: source.MPhoneNum,
-                    MsgData: source.MsgData,
-                    Priority: source.Priority,
-                    BookingTime: source.BookingTime,
-                    ExpireTime: source.ExpireTime,
-                    DepID: source.DepID,
-                    MsgType: source.MsgType,
-                    Memo: source.Memo,
-                    SenderID: source.SenderID,
-                    Bu: source.Bu,
-                    Company: source.Company,
-                    Channel: source.Channel,
-                    Reference: source.Reference,
-                    GroupID: source.GroupID,
-                    ObjectID: source.ObjectID,
-                    BatchID: source.BatchID
-                  }"
+                "script": "return source"
               }
             },
             {
-              "event": "BatchDeliveryPoolDelete",
-              "collection": "BatchDeliveryPool",
+              "event": "DeliveryPoolDelete",
+              "collection": "DeliveryPool",
               "method": "delete",
               "primaryKey": "UID",
               "schema": {
@@ -257,26 +197,7 @@ spec:
                  "BatchID": { "type": "string" }
                },
               "handler": {
-                "script": "
-                  return {
-                    UID: source.UID,
-                    SerialNum: source.SerialNum,
-                    MPhoneNum: source.MPhoneNum,
-                    MsgData: source.MsgData,
-                    Priority: source.Priority,
-                    BookingTime: source.BookingTime,
-                    ExpireTime: source.ExpireTime,
-                    DepID: source.DepID,
-                    MsgType: source.MsgType,
-                    Memo: source.Memo,
-                    SenderID: source.SenderID,
-                    Bu: source.Bu,
-                    Company: source.Company,
-                    Channel: source.Channel,
-                    Reference: source.Reference,
-                    GroupID: source.GroupID,
-                    ObjectID: source.ObjectID
-                  }"
+                "script": "return source"
               }
             }
           ]

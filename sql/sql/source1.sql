@@ -1,8 +1,8 @@
 
-CREATE DATABASE gravity;
+CREATE DATABASE smsdb;
 GO
 
-USE gravity;
+USE smsdb;
 GO
 
 

@@ -1,14 +1,12 @@
-CREATE DATABASE SinoPacBank;
+CREATE DATABASE smsdb;
 GO
 
-USE SinoPacBank;
+USE smsdb;
 GO
 
-
--- 即時或是一般簡訊 
 
 CREATE TABLE SI_SinoPacBank(
-	UID		uniqueidentifier NOT NULL PRIMARY KEY,
+	UID		uniqueidentifier default newsequentialid() NOT NULL PRIMARY KEY,
 	GUID       	char(36)	NOT NULL,
 	MPhoneNum  	varchar(10)	NOT NULL,
 	MsgData    	varchar(1000),	
@@ -29,7 +27,7 @@ GO
 
 
 CREATE TABLE MsgInfo(
-	UID		uniqueidentifier NOT NULL PRIMARY KEY,
+	UID		uniqueidentifier default newsequentialid() NOT NULL PRIMARY KEY,
 	GroupID     	varchar(10),
 	UserName    	varchar(20),
 	SourceType  	char(1),
@@ -56,7 +54,7 @@ CREATE TABLE MsgInfo(
 GO
 
 CREATE TABLE MsgMo(
-	UID		uniqueidentifier NOT NULL PRIMARY KEY,
+	UID		uniqueidentifier default newsequentialid() NOT NULL PRIMARY KEY,
 	SerialNo   	char(36) NOT NULL,
 	ReceiveTime	char(14),
 	MID        	char(10),

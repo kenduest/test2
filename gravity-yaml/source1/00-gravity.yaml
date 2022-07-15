@@ -35,6 +35,9 @@ metadata:
   name: "gravity1"
   namespace: gravity-demo
 spec:
+
+  initSpec:
+
   natsSpec:
     replicas: 3
 

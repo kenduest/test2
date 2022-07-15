@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: gravity-kernel-source-controller-pvc 
+  name: gravity-report-source-controller-pvc 
   namespace: gravity-demo
 spec:
   accessModes:
@@ -16,7 +16,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: gravity-kernel-source-synchronizer-pvc 
+  name: gravity-report-source-synchronizer-pvc 
   namespace: gravity-demo
 spec:
   accessModes:
@@ -32,7 +32,7 @@ spec:
 apiVersion: "gravity.brobridge.com/v4"
 kind: "Gravity"
 metadata:
-  name: "gravity-kernel"
+  name: "gravity-report"
   namespace: gravity-demo
 spec:
   natsSpec:
@@ -41,9 +41,9 @@ spec:
   controllerSpec:
     config:
       volume:
-        name: gravity-kernel-source-controller-store
+        name: gravity-report-source-controller-store
         persistentVolumeClaim:
-          claimName: gravity-kernel-source-controller-pvc
+          claimName: gravity-report-source-controller-pvc
 
   synchronizerSpec:
     imagePullPolicy: NotIfPresent
@@ -633,7 +633,7 @@ spec:
         }
 
       volume:
-        name: gravity-kernel-source-synchronizer-store
+        name: gravity-report-source-synchronizer-store
         persistentVolumeClaim:
-          claimName: gravity-kernel-source-synchronizer-pvc
+          claimName: gravity-report-source-synchronizer-pvc
 

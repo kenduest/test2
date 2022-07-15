@@ -22,12 +22,12 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nats-streaming
+      app: kernel-nats-streaming
       stan_cluster: gravity-kernel-stan
   template:
     metadata:
       labels:
-        app: nats-streaming
+        app: kernel-nats-streaming
         stan_cluster: gravity-kernel-stan
     spec:
       containers:
